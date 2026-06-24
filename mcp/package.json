@@ -1,1 +1,17 @@
-
+{
+  "name": "performance-marketing-mcp",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MCP Server for Performance Marketing Brain",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
