@@ -257,7 +257,7 @@ You can also invoke skills directly:
 ## Skill Categories
 
 ### Conversion Optimization
-- - `cro` - Pages and forms
+- `cro` - Pages and forms
 - `signup` - Registration flows
 - `onboarding` - Post-signup activation
 - `automation-funnel` - Automated conversion funnels and behavioral trigger workflows
