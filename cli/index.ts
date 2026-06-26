@@ -1,30 +1,33 @@
 // cli/index.ts
 import { Command } from 'commander';
 import { generateUtmLink } from './utm-generator';
+import fs from 'fs-extra';
+import path from 'path';
 
 const program = new Command();
 
-program
-  .name('perf-cli')
-  .description('CLI Tool for Performance Marketing Funnel Automation')
-  .version('1.0.0');
+// Helper để đọc context
+const getProductContext = () => {
+  const contextPath = path.join(process.cwd(), '.agents', 'product-marketing.md');
+  return fs.existsSync(contextPath) ? fs.readFileSync(contextPath, 'utf-8') : 'No context found.';
+};
 
-program.command('utm')
-  .description('Tạo UTM link chuẩn')
-  .requiredOption('-u, --url <url>', 'Base URL')
-  .requiredOption('-s, --source <source>', 'Traffic Source')
-  .requiredOption('-m, --medium <medium>', 'Traffic Medium')
-  .requiredOption('-c, --campaign <campaign>', 'Campaign Name')
+// ... giữ lại phần command 'utm' hiện có ...
+
+// THÊM MỚI COMMAND NURTURE
+program.command('nurture')
+  .description('Tạo email chăm sóc lead dựa trên Product Context')
+  .requiredOption('-t, --target <target>', 'Đối tượng/Stage lead (vd: new-lead, sql)')
   .action((options) => {
-    const link = generateUtmLink({
-      baseUrl: options.url,
-      source: options.source,
-      medium: options.medium,
-      campaign: options.campaign
-    });
-    console.log('\n✅ Link Tracking của bạn:\n');
-    console.log(link);
-    console.log('\n');
+    const context = getProductContext();
+    console.log(`\n🔍 Đang đọc context từ .agents/product-marketing.md...`);
+    
+    // Ở đây bro có thể kết nối với LLM API (OpenAI/Anthropic) 
+    // hoặc đơn giản là in ra hướng dẫn để bro copy cho AI
+    console.log(`\n📝 Gợi ý kịch bản cho stage: ${options.target}`);
+    console.log(`-----------------------------------`);
+    console.log(`Dựa trên context: \n${context.substring(0, 200)}...`); 
+    console.log(`\n(Bro hãy dán nội dung trên vào ChatGPT với lệnh: "Viết email chăm sóc lead stage ${options.target} dựa trên bối cảnh này")`);
   });
 
 program.parse(process.argv);
